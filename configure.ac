@@ -171,7 +171,7 @@ AM_CONDITIONAL([LINUX_OS], [test x$linux_os = xyes])
 
 # Checks for dependencies
 
-PKG_CHECK_MODULES(X11, [x11], [x11_pkgconfig=yes], [x11_pkgconfig=no])
+PKG_CHECK_MODULES(X11, [x11], [x11_pkgconfig=no], [x11_pkgconfig=yes])
 AC_SUBST([X11_CFLAGS])
 AC_SUBST([X11_LIBS])
 AM_CONDITIONAL([HAVE_X11], [test x$x11_pkgconfig = xyes])

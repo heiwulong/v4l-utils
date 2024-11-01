@@ -301,7 +301,15 @@ static inline double fract2f(const struct v4l2_fract *f)
 	return (double)f->numerator / (double)f->denominator;
 }
 
-#define doioctl(n, r, p) v4l_named_ioctl((n)->g_v4l_fd(), #r, r, p)
+#define doioctl(n, r, p) ({ \
+    int __ret; \
+    const char *com_log = getenv("COM_LOG"); \
+    if (com_log && strcmp(com_log, "1") == 0) { \
+        printf("%s:%d: Executing ioctl %s\n", __func__, __LINE__, #r); \
+    } \
+    __ret = v4l_named_ioctl((n)->g_v4l_fd(), #r, r, p); \
+    __ret; \
+})
 
 const char *ok(int res);
 int check_string(const char *s, size_t len);
